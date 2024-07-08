@@ -3,75 +3,84 @@ import tkinter.messagebox as messagebox
 import os
 from tkinter import filedialog
 
-def decompile_manifest():
-    root = tk.Tk()
-    root.withdraw()  # Esconder a janela principal
+class MainGuard:
+    def __init__(self):
+        pass
 
-    file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
+    def decompile_manifest(self):
+        root = tk.Tk()
+        root.withdraw()  # Esconder a janela principal
 
-    if file_path:
-        try:
-            os.system(f'androaxml {file_path}')
-            messagebox.showinfo("Sucesso", "AndroidManifest.xml foi descompilado com sucesso!")
-            os.system('clear')
-        except Exception as e:
-            messagebox.showerror("Erro", f"Ocorreu um erro ao descompilar: {str(e)}")
+        file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
 
-def decompile_resources():
-    root = tk.Tk()
-    root.withdraw()  # Esconder a janela principal
+        if file_path:
+            try:
+                os.system(f'androaxml {file_path}')
+                messagebox.showinfo("Sucesso", "AndroidManifest.xml foi descompilado com sucesso!")
+                os.system('clear')
+            except Exception as e:
+                messagebox.showerror("Erro", f"Ocorreu um erro ao descompilar: {str(e)}")
 
-    file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
+    def decompile_resources(self):
+        root = tk.Tk()
+        root.withdraw()  # Esconder a janela principal
 
-    if file_path:
-        try:
-            os.system(f'androarsc {file_path} ')
-            messagebox.showinfo("Sucesso", "resources.arsc foi descompilado com sucesso!")
-            os.system('clear')
-        except Exception as e:
-            messagebox.showerror("Erro", f"Ocorreu um erro ao descompilar: {str(e)}")
+        file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
 
-def sign_apk():
-    root = tk.Tk()
-    root.withdraw()
+        if file_path:
+            try:
+                os.system(f'androarsc {file_path} ')
+                messagebox.showinfo("Sucesso", "resources.arsc foi descompilado com sucesso!")
+                os.system('clear')
+            except Exception as e:
+                messagebox.showerror("Erro", f"Ocorreu um erro ao descompilar: {str(e)}")
 
-    file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
+    def sign_apk(self):
+        root = tk.Tk()
+        root.withdraw()
 
-    if file_path:
-        try:
-            os.system(f'androsign {file_path}')
-            messagebox.showinfo("Sucesso", "O APK foi assinado digitalmente com sucesso!")
-            os.system('clear')
-        except Exception as e:
-            messagebox.showerror("Erro", f"Ocorreu um erro ao assinar o APK: {str(e)}")
+        file_path = filedialog.askopenfilename(title="Selecionar arquivo APK", filetypes=[("APK files", "*.apk")])
 
-while True:
-    print("""
-     ______        __  __        ______        ______        _____    
-    /\  ___\      /\ \/\ \      /\  __ \      /\  == \      /\  __-.  
-    \ \ \__ \     \ \ \_\ \     \ \  __ \     \ \  __<      \ \ \/\ \ 
-     \ \_____\     \ \_____\     \ \_\ \_\     \ \_\ \_\     \ \____- 
-      \/_____/      \/_____/      \/_/\/_/      \/_/ /_/      \/____/
+        if file_path:
+            try:
+                os.system(f'androsign {file_path}')
+                messagebox.showinfo("Sucesso", "O APK foi assinado digitalmente com sucesso!")
+                os.system('clear')
+            except Exception as e:
+                messagebox.showerror("Erro", f"Ocorreu um erro ao assinar o APK: {str(e)}")
 
-      by: Anderson B silva (@oanderoficial) - V 1.0 
-    """)
+    def run(self):
+        while True:
+            print("""
+             ______        __  __        ______        ______        _____    
+            /\  ___\      /\ \/\ \      /\  __ \      /\  == \      /\  __-.  
+            \ \ \__ \     \ \ \_\ \     \ \  __ \     \ \  __<      \ \ \/\ \ 
+             \ \_____\     \ \_____\     \ \_\ \_\     \ \_\ \_\     \ \____- 
+              \/_____/      \/_____/      \/_/\/_/      \/_/ /_/      \/____/
 
-    print("1 - Descompilar o arquivo AndroidManifest.xml do APK.")
-    print("2 - Descompilar o arquivo resources.arsc do APK.")
-    print("3 - Assinar digitalmente um arquivo APK.")
-    print("5 - Sair ")
+              by: Anderson B silva (@oanderoficial) - V 1.0 
+            """)
 
-    menu = input("Digite uma opção:")
+            print("1 - Descompilar o arquivo AndroidManifest.xml do APK.")
+            print("2 - Descompilar o arquivo resources.arsc do APK.")
+            print("3 - Assinar digitalmente um arquivo APK.")
+            print("5 - Sair ")
 
-    if menu == "1":
-        decompile_manifest()
+            menu = input("Digite uma opção:")
 
-    elif menu == "2":
-        decompile_resources()
+            if menu == "1":
+                self.decompile_manifest()
 
-    elif menu =="3": 
-        sign_apk()
+            elif menu == "2":
+                self.decompile_resources()
 
-    elif menu == "5":
-        print("Saindo...")
-        break
+            elif menu =="3": 
+                self.sign_apk()
+
+            elif menu == "5":
+                print("Saindo...")
+                break
+
+if __name__ == "__main__":
+    tool = MainGuard()
+    tool.run()
